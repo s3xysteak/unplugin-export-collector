@@ -1,0 +1,57 @@
+{
+  "name": "un-auto-import-resolver",
+  "type": "module",
+  "version": "0.0.0",
+  "private": false,
+  "description": "un-auto-import-resolver",
+  "author": "s3xysteak",
+  "license": "MIT",
+  "homepage": "https://github.com/s3xysteak/un-auto-import-resolver",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s3xysteak/un-auto-import-resolver.git"
+  },
+  "bugs": "https://github.com/s3xysteak/un-auto-import-resolver/issues",
+  "keywords": [
+    "type",
+    "utils"
+  ],
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.umd.cjs"
+  },
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build --force",
+    "test": "vitest",
+    "test-once": "vitest run",
+    "release": "esno ./scripts/release.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.8.1",
+    "@types/node": "^20.11.26",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.2",
+    "unplugin-auto-import": "^0.17.5",
+    "vite": "^5.1.6",
+    "vite-plugin-dts": "^3.7.3",
+    "vitest": "^1.3.1"
+  },
+  "dependencies": {
+    "@swc/core": "^1.4.6"
+  }
+}
