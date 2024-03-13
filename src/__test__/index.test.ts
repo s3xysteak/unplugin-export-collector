@@ -11,7 +11,7 @@ export function main(content: string) {
     syntax: 'typescript',
     target: 'es2020',
   }).then((module) => {
-    Console.log(module.body)
+    console.log(module.body)
   })
 }
 
