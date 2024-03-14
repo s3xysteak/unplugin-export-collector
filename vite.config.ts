@@ -8,13 +8,15 @@ import { configDefaults } from 'vitest/config'
 import AutoImport from 'unplugin-auto-import/vite'
 import dts from 'vite-plugin-dts'
 
+import { autoImport as utilsAutoIm } from '@s3xysteak/utils'
+
 // import pkg from './package.json'
 
 export default defineConfig({
   plugins: [
     AutoImport({
       dirs: ['src/utils'],
-      imports: ['vitest'],
+      imports: ['vitest', utilsAutoIm()],
       dts: 'types/auto-imports.d.ts',
     }),
     dts({ rollupTypes: true }),
