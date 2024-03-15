@@ -2,6 +2,8 @@ import { URL, fileURLToPath } from 'node:url'
 
 export default r({
   '@': './src',
+  '@core': './src/core',
+  '@utils': './src/utils',
 })
 
 function r(aliasMap: Record<string, string>) {

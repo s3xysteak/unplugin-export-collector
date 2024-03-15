@@ -1,29 +1,8 @@
-import { URL, fileURLToPath } from 'node:url'
-import { dirname, resolve } from 'node:path'
-import { existsSync, readFileSync, statSync } from 'node:fs'
+import { dirname } from 'node:path'
+import { readFileSync } from 'node:fs'
 import { parseSync } from '@swc/core'
-import { isUndefined } from '@s3xysteak/utils'
 
-export function isDirectory(path: string) {
-  return statSync(path).isDirectory()
-}
-
-export function solvePath(rawPath: string, base?: string) {
-  const _p = resolve(base ?? fileURLToPath(new URL('./', import.meta.url)), rawPath)
-  const p = existsSync(_p)
-    ? isDirectory(_p)
-      ? resolve(_p, 'index')
-      : _p
-    : _p
-
-  const extensionList = ['', '.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']
-
-  const ext = extensionList.find(ext => existsSync(p + ext))
-  if (isUndefined(ext))
-    throw new Error(`File not found: ${p}`)
-
-  return p + ext
-}
+import { solvePath } from '@utils/general'
 
 export function parser(path: string, base?: string): string[] {
   const result: string[] = []
