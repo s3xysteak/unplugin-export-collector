@@ -1,5 +1,5 @@
 import { URL, fileURLToPath } from 'node:url'
-import { dirname, join } from 'node:path'
+import { dirname, resolve } from 'node:path'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { parseSync } from '@swc/core'
 import { isUndefined } from '@s3xysteak/utils'
@@ -9,10 +9,10 @@ export function isDirectory(path: string) {
 }
 
 export function solvePath(rawPath: string, base?: string) {
-  const _p = join(base ?? fileURLToPath(new URL('./', import.meta.url)), rawPath)
+  const _p = resolve(base ?? fileURLToPath(new URL('./', import.meta.url)), rawPath)
   const p = existsSync(_p)
     ? isDirectory(_p)
-      ? join(_p, 'index')
+      ? resolve(_p, 'index')
       : _p
     : _p
 

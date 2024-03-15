@@ -1,5 +1,6 @@
 import { join } from 'node:path'
 import { URL, fileURLToPath } from 'node:url'
+import { describe, expect, it } from 'vitest'
 import { parser, solvePath } from '@/core/parser'
 
 describe('parser', () => {

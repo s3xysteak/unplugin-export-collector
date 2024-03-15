@@ -24,6 +24,6 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": ["src", "types", "test", "scripts", "vite.config.ts"],
+  "include": ["src", "test", "scripts"],
   "exclude": ["*.md"]
 }
