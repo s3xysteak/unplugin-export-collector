@@ -5,10 +5,14 @@ import { describe, expect, it } from 'vitest'
 import { expCollector, parser } from '@core/parser'
 
 describe('parser', () => {
-  const base = fileURLToPath(new URL('./', import.meta.url))
-
   it('parser', async () => {
-    const content = await fs.readFile(resolve(base, './parserLab/index.ts'), 'utf-8')
+    const content = await fs.readFile(
+      resolve(
+        fileURLToPath(new URL('./', import.meta.url)),
+        './parserLab/index.ts',
+      ),
+      'utf-8',
+    )
     const res = await parser(content)
 
     expect(res.exp).toEqual(['one', 'two', 'getThree', 'funcIndex', 'ClassIndex'])
@@ -18,7 +22,7 @@ describe('parser', () => {
   it('expCollector', async () => {
     const target = ['one', 'two', 'getThree', 'funcIndex', 'ClassIndex', 'func1', 'func2', 'func3', 'fRe'].sort()
 
-    const result = await expCollector('./parserLab', base).then(res => res.sort())
+    const result = await expCollector('./test/parserLab').then(res => res.sort())
     expect(result).toEqual(target)
   })
 })

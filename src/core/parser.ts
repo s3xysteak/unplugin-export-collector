@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { dirname } from 'node:path'
 import { promises as fs } from 'node:fs'
 import { parse as swcParse } from '@swc/core'
@@ -61,7 +62,7 @@ export async function expCollector(path: string, base?: string): Promise<string[
       .forEach(async path => await recursion(path, dirname(filePath)))
   }
 
-  await recursion(path, base)
+  await recursion(path, base ?? process.cwd())
 
   return result
 }
