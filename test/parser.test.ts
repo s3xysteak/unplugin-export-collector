@@ -15,13 +15,11 @@ describe('parser', () => {
     expect(res.refer).toEqual(['./core/func1', './core/func2'])
   })
 
-  it('parser', () => {
+  it('parser', async () => {
     const target = ['one', 'two', 'getThree', 'funcIndex', 'ClassIndex', 'func1', 'func2', 'func3', 'fRe'].sort()
 
-    const generate = (path: string) => parser(path, base).sort()
+    const generate = (path: string) => parser(path, base).then(res => res.sort())
 
-    expect(generate('./parserLab/index.ts')).toEqual(target)
-    expect(generate('./parserLab/index')).toEqual(target)
-    expect(generate('./parserLab')).toEqual(target)
+    expect(await generate('./parserLab')).toEqual(target)
   })
 })

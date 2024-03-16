@@ -1,6 +1,7 @@
 import { dirname } from 'node:path'
-import { readFileSync } from 'node:fs'
-import { parse as swcParse, parseSync as swcParseSync } from '@swc/core'
+import { promises as fs } from 'node:fs'
+import { parse as swcParse } from '@swc/core'
+import { p } from '@s3xysteak/utils'
 
 import { solvePath } from '@utils/general'
 
@@ -47,42 +48,20 @@ export async function parse(content: string): Promise<ParseValue> {
   }
 }
 
-export function parser(path: string, base?: string): string[] {
+export async function parser(path: string, base?: string): Promise<string[]> {
   const result: string[] = []
 
-  const recursion = (path: string, base?: string) => {
+  const recursion = async (path: string, base?: string) => {
     const filePath = solvePath(path, base)
+    const content = await fs.readFile(filePath, 'utf-8')
 
-    const module = swcParseSync(readFileSync(filePath, 'utf-8'), {
-      syntax: 'ecmascript',
-      target: 'es2020',
-    })
-
-    module.body.forEach((node) => {
-      if (node.type === 'ExportAllDeclaration')
-        recursion(node.source.value, dirname(filePath))
-
-      if (node.type === 'ExportNamedDeclaration') {
-        node.specifiers.forEach((specifier) => {
-          if (specifier.type === 'ExportSpecifier')
-            result.push(specifier?.exported?.value ?? specifier.orig.value)
-          if (specifier.type === 'ExportNamespaceSpecifier')
-            recursion(specifier.name.value, dirname(filePath))
-        })
-      }
-
-      if (node.type === 'ExportDeclaration') {
-        node.declaration.type === 'VariableDeclaration' && node.declaration.declarations.forEach((declaration) => {
-          declaration.id.type === 'Identifier' && result.push(declaration.id.value)
-        })
-
-        node.declaration.type === 'FunctionDeclaration' && result.push(node.declaration.identifier.value)
-        node.declaration.type === 'ClassDeclaration' && result.push(node.declaration.identifier.value)
-      }
-    })
+    const { exp, refer } = await parse(content)
+    result.push(...exp)
+    await p(refer, { concurrency: Number.POSITIVE_INFINITY })
+      .forEach(async path => await recursion(path, dirname(filePath)))
   }
 
-  recursion(path, base)
+  await recursion(path, base)
 
   return result
 }
