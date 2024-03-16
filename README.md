@@ -19,6 +19,7 @@ export const one = 1
 export const getThree = () => 3
 
 export * from './func1' // export from another file.
+export * from 'vue' // reExport from deps will be ignored.
 ```
 
 in `src/func1.ts` is:

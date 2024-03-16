@@ -19,6 +19,7 @@ export const one = 1
 export const getThree = () => 3
 
 export * from './func1' // 从另一个文件导出。
+export * from 'vue' // 依赖的重导出将会被忽略。
 ```
 
 还有 `src/func1.ts` :
