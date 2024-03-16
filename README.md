@@ -1,5 +1,7 @@
 # :tada: export-collector
 
+English | [简体中文](./README-zh.md)
+
 ESM export collector.
 
 ## :rocket: Feature

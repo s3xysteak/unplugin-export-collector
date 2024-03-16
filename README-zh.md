@@ -1,5 +1,7 @@
 # :tada: export-collector
 
+[English](./README.md) | 简体中文
+
 收集ESM所有导出的工具。
 
 ## :rocket: 功能
