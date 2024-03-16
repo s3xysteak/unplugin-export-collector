@@ -1,17 +1,19 @@
+import process from 'node:process'
 import { URL, fileURLToPath } from 'node:url'
-import { resolve } from 'node:path'
-import { existsSync, statSync } from 'node:fs'
+import { join } from 'node:path'
+import { existsSync, promises as fs } from 'node:fs'
 import { isUndefined } from '@s3xysteak/utils'
 
-export function isDirectory(path: string) {
-  return statSync(path).isDirectory()
+export async function isDirectory(path: string) {
+  const stat = await fs.stat(path)
+  return stat.isDirectory()
 }
 
-export function solvePath(rawPath: string, base?: string) {
-  const _p = resolve(base ?? fileURLToPath(new URL('./', import.meta.url)), rawPath)
+export async function solvePath(rawPath: string, base?: string) {
+  const _p = join(base ?? fileURLToPath(new URL('./', import.meta.url)), rawPath)
   const p = existsSync(_p)
-    ? isDirectory(_p)
-      ? resolve(_p, 'index')
+    ? await isDirectory(_p)
+      ? join(_p, 'index')
       : _p
     : _p
 
@@ -22,4 +24,10 @@ export function solvePath(rawPath: string, base?: string) {
     throw new Error(`File not found: ${p}`)
 
   return p + ext
+}
+
+export async function getPkg() {
+  const pkgPath = join(process.cwd(), './package.json')
+  const pkg = await import(pkgPath).then(m => m.default)
+  return pkg
 }

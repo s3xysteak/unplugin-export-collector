@@ -6,12 +6,12 @@ import { solvePath } from '@utils/general'
 describe('utils-general', () => {
   const base = fileURLToPath(new URL('./', import.meta.url))
 
-  it('solvePath', () => {
+  it('solvePath', async () => {
     const generate = (path: string) => solvePath(path, base)
     const target = join(base, './parserLab/index.ts')
 
-    expect(generate('./parserLab/index.ts')).toBe(target)
-    expect(generate('./parserLab/index')).toBe(target)
-    expect(generate('./parserLab')).toBe(target)
+    expect(await generate('./parserLab/index.ts')).toBe(target)
+    expect(await generate('./parserLab/index')).toBe(target)
+    expect(await generate('./parserLab')).toBe(target)
   })
 })

@@ -6,3 +6,5 @@ export class ClassIndex {}
 
 export * from './core/func1'
 export * from './core/func2'
+
+export * from '@s3xysteak/utils'

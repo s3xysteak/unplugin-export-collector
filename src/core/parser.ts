@@ -4,13 +4,30 @@ import { promises as fs } from 'node:fs'
 import { parse as swcParse } from '@swc/core'
 import { p } from '@s3xysteak/utils'
 
-import { solvePath } from '@utils/general'
+import { getPkg, solvePath } from '@utils/general'
+
+export async function expCollector(path: string, base?: string): Promise<string[]> {
+  const result: string[] = []
+
+  const recursion = async (path: string, base?: string) => {
+    const filePath = await solvePath(path, base)
+    const content = await fs.readFile(filePath, 'utf-8')
+
+    const { exp, refer } = await parser(content)
+    result.push(...exp)
+    await p(refer, { concurrency: Number.POSITIVE_INFINITY })
+      .forEach(async path => await recursion(path, dirname(filePath)))
+  }
+
+  await recursion(path, base ?? process.cwd())
+
+  return result
+}
 
 export interface ParseValue {
   exp: string[]
   refer: string[]
 }
-
 export async function parser(content: string): Promise<ParseValue> {
   const exp: string[] = []
   const refer: string[] = []
@@ -43,26 +60,10 @@ export async function parser(content: string): Promise<ParseValue> {
     }
   })
 
+  const pkg = await getPkg()
+  const deps = [...Object.keys(pkg.dependencies ?? {}), ...Object.keys(pkg.devDependencies ?? {})]
   return {
     exp,
-    refer,
+    refer: refer.filter(path => !deps.includes(path)),
   }
-}
-
-export async function expCollector(path: string, base?: string): Promise<string[]> {
-  const result: string[] = []
-
-  const recursion = async (path: string, base?: string) => {
-    const filePath = solvePath(path, base)
-    const content = await fs.readFile(filePath, 'utf-8')
-
-    const { exp, refer } = await parser(content)
-    result.push(...exp)
-    await p(refer, { concurrency: Number.POSITIVE_INFINITY })
-      .forEach(async path => await recursion(path, dirname(filePath)))
-  }
-
-  await recursion(path, base ?? process.cwd())
-
-  return result
 }
