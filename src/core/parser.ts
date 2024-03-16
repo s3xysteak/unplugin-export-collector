@@ -32,8 +32,11 @@ export async function parser(content: string): Promise<ParseValue> {
   const exp: string[] = []
   const refer: string[] = []
 
+  const pkg = await getPkg()
+  const isTs = pkg.devDependencies?.typescript || pkg.dependencies?.typescript
+
   const module = await swcParse(content, {
-    syntax: 'ecmascript',
+    syntax: isTs ? 'typescript' : 'ecmascript',
     target: 'es2020',
   })
 
@@ -60,7 +63,6 @@ export async function parser(content: string): Promise<ParseValue> {
     }
   })
 
-  const pkg = await getPkg()
   const deps = [...Object.keys(pkg.dependencies ?? {}), ...Object.keys(pkg.devDependencies ?? {})]
   return {
     exp,

@@ -4,6 +4,8 @@ export const getThree = () => 3
 export function funcIndex() {}
 export class ClassIndex {}
 
+export type NumOrStr = number | string
+
 export * from './core/func1'
 export * from './core/func2'
 
