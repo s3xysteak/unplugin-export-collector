@@ -35,9 +35,9 @@ export function autoImport(map?: Partial<AutoImportMap>): Record<string, (string
 
 `
 
-    await expGenerator('./test/parserLab/generateTest.ts', { funcs: ['custom'] })
+    await expGenerator('./test/parserLab/generatorTest.ts', { funcs: ['custom'] })
 
-    const result = await fs.readFile('./test/parserLab/generateTest.ts', 'utf-8')
+    const result = await fs.readFile('./test/parserLab/generatorTest.ts', 'utf-8')
 
     expect(result.trim()).toEqual(target.trim())
   })
