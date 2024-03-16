@@ -28,6 +28,6 @@ export async function solvePath(rawPath: string, base?: string) {
 
 export async function getPkg() {
   const pkgPath = join(process.cwd(), './package.json')
-  const pkg = await import(pkgPath).then(m => m.default)
+  const pkg = await fs.readFile(pkgPath, 'utf-8').then(val => JSON.parse(val))
   return pkg
 }
