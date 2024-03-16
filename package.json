@@ -1,17 +1,17 @@
 {
-  "name": "un-auto-import-resolver",
+  "name": "export-collector",
   "type": "module",
   "version": "0.0.0",
   "private": false,
-  "description": "un-auto-import-resolver",
+  "description": "export-collector",
   "author": "s3xysteak",
   "license": "MIT",
-  "homepage": "https://github.com/s3xysteak/un-auto-import-resolver",
+  "homepage": "https://github.com/s3xysteak/export-collector",
   "repository": {
     "type": "git",
-    "url": "https://github.com/s3xysteak/un-auto-import-resolver.git"
+    "url": "https://github.com/s3xysteak/export-collector.git"
   },
-  "bugs": "https://github.com/s3xysteak/un-auto-import-resolver/issues",
+  "bugs": "https://github.com/s3xysteak/export-collector/issues",
   "keywords": [
     "type",
     "utils"
