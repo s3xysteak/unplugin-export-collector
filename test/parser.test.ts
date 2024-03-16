@@ -18,8 +18,7 @@ describe('parser', () => {
   it('expCollector', async () => {
     const target = ['one', 'two', 'getThree', 'funcIndex', 'ClassIndex', 'func1', 'func2', 'func3', 'fRe'].sort()
 
-    const generate = (path: string) => expCollector(path, base).then(res => res.sort())
-
-    expect(await generate('./parserLab')).toEqual(target)
+    const result = await expCollector('./parserLab', base).then(res => res.sort())
+    expect(result).toEqual(target)
   })
 })
