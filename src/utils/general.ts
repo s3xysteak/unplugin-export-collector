@@ -11,11 +11,11 @@ export async function isDirectory(path: string) {
 
 export async function solvePath(rawPath: string, base?: string) {
   const _p = join(base ?? fileURLToPath(new URL('./', import.meta.url)), rawPath)
-  const p = existsSync(_p)
-    ? await isDirectory(_p)
+  const p = !existsSync(_p)
+    ? _p
+    : await isDirectory(_p)
       ? join(_p, 'index')
       : _p
-    : _p
 
   const extensionList = ['', '.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']
 

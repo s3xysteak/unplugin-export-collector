@@ -41,11 +41,13 @@ ${comment}
   const firstComment = firstIndex(content)
   const lastComment = lastIndex(content)
 
+  const exportList = [...expList, ...include].filter(i => !exclude.includes(i)).sort()
+
   const val = `${`${content.substring(0, firstComment).trim()}
 
 ${comment}
 
-const exportList = ${JSON.stringify([...expList, ...include].filter(i => !exclude.includes(i)).sort())} as const
+const exportList = ${JSON.stringify(exportList)} as const
 
 export type AutoImportMap = { [K in typeof exportList[number]]: string }
 export function autoImport(map?: Partial<AutoImportMap>): Record<string, (string | [string, string])[]> {
