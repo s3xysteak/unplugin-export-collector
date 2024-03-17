@@ -10,7 +10,7 @@ const lastIndex = (content: string) => content.lastIndexOf(comment) + comment.le
 export interface ExpGeneratorOptions {
   base: string
   pkgName: string
-  funcs: string[]
+  include: string[]
 }
 export async function expGenerator(path: string, options?: Partial<ExpGeneratorOptions>) {
   const pkg = await getPkg()
@@ -18,7 +18,7 @@ export async function expGenerator(path: string, options?: Partial<ExpGeneratorO
   const {
     base = process.cwd(),
     pkgName = pkg.name,
-    funcs = [],
+    include = [],
   } = options ?? {}
 
   const targetPath = await solvePath(path, base)
@@ -41,7 +41,7 @@ ${comment}
 
 ${comment}
 
-const exportList = ${JSON.stringify([...expList, ...funcs].filter(i => i !== 'autoImport').sort())} as const
+const exportList = ${JSON.stringify([...expList, ...include].filter(i => i !== 'autoImport').sort())} as const
 
 export type AutoImportMap = { [K in typeof exportList[number]]: string }
 export function autoImport(map?: Partial<AutoImportMap>): Record<string, (string | [string, string])[]> {

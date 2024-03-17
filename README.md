@@ -45,7 +45,7 @@ export { func1, funcRe as fRe }
 import { expGenerator } from 'export-collector'
 
 await expGenerator('./src/index.ts', {
-  funcs: ['custom'] // custom export name.
+  include: ['custom'] // custom export name.
 })
 ```
 

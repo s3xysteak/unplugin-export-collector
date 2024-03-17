@@ -45,7 +45,7 @@ export { func1, funcRe as fRe }
 import { expGenerator } from 'export-collector'
 
 await expGenerator('./src/index.ts', {
-  funcs: ['custom'] // 自定义的导出名。
+  include: ['custom'] // 自定义的导出名。
 })
 ```
 
