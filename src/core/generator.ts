@@ -11,6 +11,7 @@ export interface ExpGeneratorOptions {
   base: string
   pkgName: string
   include: string[]
+  exclude: string[]
 }
 export async function expGenerator(path: string, options?: Partial<ExpGeneratorOptions>) {
   const pkg = await getPkg()
@@ -19,7 +20,10 @@ export async function expGenerator(path: string, options?: Partial<ExpGeneratorO
     base = process.cwd(),
     pkgName = pkg.name,
     include = [],
+    exclude = [],
   } = options ?? {}
+
+  exclude.push('autoImport')
 
   const targetPath = await solvePath(path, base)
 
@@ -41,7 +45,7 @@ ${comment}
 
 ${comment}
 
-const exportList = ${JSON.stringify([...expList, ...include].filter(i => i !== 'autoImport').sort())} as const
+const exportList = ${JSON.stringify([...expList, ...include].filter(i => !exclude.includes(i)).sort())} as const
 
 export type AutoImportMap = { [K in typeof exportList[number]]: string }
 export function autoImport(map?: Partial<AutoImportMap>): Record<string, (string | [string, string])[]> {

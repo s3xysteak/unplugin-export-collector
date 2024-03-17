@@ -4,7 +4,7 @@ import { expGenerator } from '@/core/generator'
 
 describe('generate', () => {
   it('expGenerator', async () => {
-    const exportList = ['custom', 'one', 'two', 'getThree', 'funcIndex', 'ClassIndex', 'func3', 'func2', 'func1', 'fRe'].sort()
+    const exportList = ['custom', 'two', 'getThree', 'funcIndex', 'ClassIndex', 'func3', 'func2', 'func1', 'fRe'].sort()
 
     const target = `
 export const one = 1
@@ -35,7 +35,7 @@ export function autoImport(map?: Partial<AutoImportMap>): Record<string, (string
 
 `
 
-    await expGenerator('./test/parserLab/generatorTest.ts', { include: ['custom'] })
+    await expGenerator('./test/parserLab/generatorTest.ts', { include: ['custom'], exclude: ['one'] })
 
     const result = await fs.readFile('./test/parserLab/generatorTest.ts', 'utf-8')
 
