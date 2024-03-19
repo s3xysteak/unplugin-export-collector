@@ -3,6 +3,7 @@ import { URL, fileURLToPath } from 'node:url'
 import { join } from 'node:path'
 import { existsSync, promises as fs } from 'node:fs'
 import { isUndefined } from '@s3xysteak/utils'
+import { isAbsolute, normalize, resolve } from 'pathe'
 
 export async function isDirectory(path: string) {
   const stat = await fs.stat(path)
@@ -26,8 +27,20 @@ export async function solvePath(rawPath: string, base?: string) {
   return p + ext
 }
 
-export async function getPkg() {
-  const pkgPath = join(process.cwd(), './package.json')
+export async function getPkg(path?: string) {
+  const pkgPath = path ? absolutePath(path) : resolve(process.cwd(), './package.json')
   const pkg = await fs.readFile(pkgPath, 'utf-8').then(val => JSON.parse(val))
   return pkg
+}
+
+export function absolutePath(path: string, base?: string) {
+  return isAbsolute(path) ? normalize(path) : resolve(base ?? process.cwd(), path)
+}
+
+export function findExtension(path: string) {
+  const p = absolutePath(path)
+  const extensionList = ['', '.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']
+
+  const ext = extensionList.find(ext => existsSync(p + ext))
+  return ext
 }
