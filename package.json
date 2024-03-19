@@ -53,14 +53,13 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "dev": "vite",
     "build": "tsc && unbuild",
     "build-only": "unbuild",
     "test": "vitest",
     "test-once": "vitest run",
     "release": "esno ./scripts/release.ts",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint-fix": "eslint . --fix"
   },
   "dependencies": {
     "@s3xysteak/utils": "^0.1.8",
