@@ -29,10 +29,15 @@ export async function getPkg(path?: string) {
   return pkg
 }
 
+/** return extension with `.` */
 export function findExtension(path: string) {
   const p = resolve(process.cwd(), path)
   const extensionList = ['', '.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']
 
   const ext = extensionList.find(ext => existsSync(p + ext))
   return ext
+}
+
+export function addExtension(path: string) {
+  return path + findExtension(path)
 }

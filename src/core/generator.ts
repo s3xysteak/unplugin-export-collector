@@ -12,8 +12,15 @@ export interface ExpGeneratorOptions {
   pkgName: string
   include: string[]
   exclude: string[]
+  rename: string
 }
+
 export async function expGenerator(path: string, options?: Partial<ExpGeneratorOptions>) {
+  const { data, targetPath } = await expGeneratorData(path, options)
+  await fs.writeFile(targetPath, data)
+}
+
+export async function expGeneratorData(path: string, options?: Partial<ExpGeneratorOptions>) {
   const pkg = await getPkg()
 
   const {
@@ -21,44 +28,51 @@ export async function expGenerator(path: string, options?: Partial<ExpGeneratorO
     pkgName = pkg.name,
     include = [],
     exclude = [],
+    rename = 'autoImport',
   } = options ?? {}
 
-  exclude.push('autoImport')
+  exclude.push(rename)
 
   const targetPath = await findPath(path, base)
 
   const expList = await expCollector(path, base)
-  const _content = await fs.readFile(targetPath, 'utf-8')
+  let content = await fs.readFile(targetPath, 'utf-8')
 
-  const _firstComment = firstIndex(_content)
+  const _firstComment = firstIndex(content)
 
-  _firstComment === -1 && await fs.writeFile(targetPath, `${_content}\n
+  if (_firstComment === -1) {
+    content = `${content}\n
 ${comment}
 ${comment}
-`)
+`
+  }
 
-  const content = await fs.readFile(targetPath, 'utf-8')
   const firstComment = firstIndex(content)
   const lastComment = lastIndex(content)
 
   const exportList = [...expList, ...include].filter(i => !exclude.includes(i)).sort()
 
-  const val = `${`${content.substring(0, firstComment).trim()}
+  const val = `
+${content.substring(0, firstComment).trim()}
 
 ${comment}
 
 const exportList = ${JSON.stringify(exportList)} as const
 
-export type AutoImportMap = { [K in typeof exportList[number]]: string }
-export function autoImport(map?: Partial<AutoImportMap>): Record<string, (string | [string, string])[]> {
+export type ExportCollectorAutoImportMap = { [K in typeof exportList[number]]: string }
+export function ${rename}(map?: Partial<ExportCollectorAutoImportMap>): Record<string, (string | [string, string])[]> {
   return {
     '${pkgName}': exportList.map(v => map && map[v] ? [v, map[v]] as [string, string] : v),
   }
 }
 
 ${comment}
-${content.substring(lastComment)}
-`.trim()}\n`
 
-  await fs.writeFile(targetPath, val)
+${content.substring(lastComment).trim()}
+`
+
+  return {
+    data: `${val.trim()}\n`,
+    targetPath,
+  }
 }
