@@ -4,7 +4,7 @@ import { dirname } from 'pathe'
 import { parse as swcParse } from '@swc/core'
 import { p } from '@s3xysteak/utils'
 
-import { getPkg, findPath } from '@utils/general'
+import { findPath, getPkg } from '@utils/general'
 
 export async function expCollector(path: string, base?: string): Promise<string[]> {
   const result: string[] = []
