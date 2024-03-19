@@ -1,5 +1,6 @@
 import { promises as fs } from 'node:fs'
 import { describe, expect, it } from 'vitest'
+import { toLF } from '@s3xysteak/utils'
 import { expGenerator } from '@/core/generator'
 
 describe('generate', () => {
@@ -39,6 +40,6 @@ export function autoImport(map?: Partial<AutoImportMap>): Record<string, (string
 
     const result = await fs.readFile('./test/parserLab/generatorTest.ts', 'utf-8')
 
-    expect(result.trim()).toEqual(target.trim())
+    expect(toLF(result).trim()).toBe(target.trim())
   })
 })
