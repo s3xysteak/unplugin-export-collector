@@ -1,16 +1,16 @@
 import process from 'node:process'
-import { dirname } from 'node:path'
 import { promises as fs } from 'node:fs'
+import { dirname } from 'pathe'
 import { parse as swcParse } from '@swc/core'
 import { p } from '@s3xysteak/utils'
 
-import { getPkg, solvePath } from '@utils/general'
+import { getPkg, findPath } from '@utils/general'
 
 export async function expCollector(path: string, base?: string): Promise<string[]> {
   const result: string[] = []
 
   const recursion = async (path: string, base?: string) => {
-    const filePath = await solvePath(path, base)
+    const filePath = await findPath(path, base)
     const content = await fs.readFile(filePath, 'utf-8')
 
     const { exp, refer } = await parser(content)

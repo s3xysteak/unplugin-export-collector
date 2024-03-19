@@ -1,6 +1,6 @@
-import { resolve } from 'node:path'
 import { URL, fileURLToPath } from 'node:url'
 import { promises as fs } from 'node:fs'
+import { resolve } from 'pathe'
 import { describe, expect, it } from 'vitest'
 import { expCollector, parser } from '@core/parser'
 

@@ -1,14 +1,14 @@
 import { URL, fileURLToPath } from 'node:url'
-import { join } from 'node:path'
+import { resolve } from 'pathe'
 import { describe, expect, it } from 'vitest'
-import { solvePath } from '@utils/general'
+import { findPath } from '@utils/general'
 
 describe('utils-general', () => {
   const base = fileURLToPath(new URL('./', import.meta.url))
 
-  it('solvePath', async () => {
-    const generate = (path: string) => solvePath(path, base)
-    const target = join(base, './parserLab/index.ts')
+  it('findPath', async () => {
+    const generate = (path: string) => findPath(path, base)
+    const target = resolve(base, './parserLab/index.ts')
 
     expect(await generate('./parserLab/index.ts')).toBe(target)
     expect(await generate('./parserLab/index')).toBe(target)
