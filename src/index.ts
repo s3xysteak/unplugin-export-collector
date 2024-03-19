@@ -1,2 +1,1 @@
-export * from './core/parser'
-export * from './core/generator'
+export { default } from './core/unplugin'

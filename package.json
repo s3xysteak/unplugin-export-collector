@@ -18,14 +18,29 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.mjs",
+      "require": "./dist/core.cjs"
     },
     "./vite": {
-      "types": "./dist/vite.d.ts",
-      "import": "./dist/vite.mjs",
-      "require": "./dist/vite.cjs"
+      "import": {
+        "types": "./dist/vite.d.ts",
+        "default": "./dist/vite.mjs"
+      },
+      "require": {
+        "types": "./dist/vite.d.ts",
+        "default": "./dist/vite.cjs"
+      }
     }
   },
   "main": "./dist/index.cjs",
@@ -49,7 +64,8 @@
   },
   "dependencies": {
     "@s3xysteak/utils": "^0.1.8",
-    "@swc/core": "^1.4.8"
+    "@swc/core": "^1.4.8",
+    "unplugin": "^1.10.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.8.3",
@@ -58,7 +74,6 @@
     "pathe": "^1.1.2",
     "typescript": "^5.4.2",
     "unbuild": "^2.0.0",
-    "unplugin": "^1.10.0",
     "vitest": "^1.4.0"
   }
 }
