@@ -1,7 +1,7 @@
 import { URL, fileURLToPath } from 'node:url'
 import { resolve } from 'pathe'
 import { describe, expect, it } from 'vitest'
-import { findPath } from '@utils/general'
+import { findPath } from '@/core/utils'
 
 describe('utils-general', () => {
   const base = fileURLToPath(new URL('./', import.meta.url))

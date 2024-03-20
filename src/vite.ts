@@ -1,3 +1,3 @@
-import unplugin from './core/unplugin'
+import unplugin from '.'
 
 export default unplugin.vite

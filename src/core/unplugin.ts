@@ -1,7 +1,7 @@
 import process from 'node:process'
 import { createUnplugin } from 'unplugin'
 import { resolve } from 'pathe'
-import { addExtension } from '../utils/general'
+import { addExtension } from './utils'
 import { type ExpGeneratorOptions, expGeneratorData } from './generator'
 
 export interface UnpluginFactoryOptions extends ExpGeneratorOptions {
