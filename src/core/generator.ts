@@ -13,6 +13,7 @@ export interface ExpGeneratorOptions {
   include: string[]
   exclude: string[]
   rename: string
+  typescript: boolean
 }
 
 export async function expGenerator(path: string, options?: Partial<ExpGeneratorOptions>) {
@@ -21,7 +22,7 @@ export async function expGenerator(path: string, options?: Partial<ExpGeneratorO
 }
 
 export async function expGeneratorData(path: string, options?: Partial<ExpGeneratorOptions>) {
-  const pkg = await getPkg()
+  const { raw: pkg, isTs } = await getPkg()
 
   const {
     base = process.cwd(),
@@ -29,6 +30,7 @@ export async function expGeneratorData(path: string, options?: Partial<ExpGenera
     include = [],
     exclude = [],
     rename = 'autoImport',
+    typescript = isTs,
   } = options ?? {}
 
   exclude.push(rename)
@@ -52,23 +54,41 @@ ${comment}
 
   const exportList = [...expList, ...include].filter(i => !exclude.includes(i)).sort()
 
-  const val = `
+  const getTemplate = (body: string) => `
 ${content.substring(0, firstComment).trim()}
 
 ${comment}
 
+${body.trim()}
+
+${comment}
+
+${content.substring(lastComment).trim()}
+`
+
+  const TS = getTemplate(`
 const __UnExportList = ${JSON.stringify(exportList)} as const
 
 export function ${rename}(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>): Record<string, (string | [string, string])[]> {
   return {
     '${pkgName}': __UnExportList.map(v => map && map[v] ? [v, map[v]] as [string, string] : v),
   }
-}
+}`)
 
-${comment}
+  const JS = getTemplate(`
+const __UnExportList = /** @type {const} */ (${JSON.stringify(exportList)})
 
-${content.substring(lastComment).trim()}
-`
+/**
+ * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} map
+ * @returns {Record<string, (string | [string, string])[]>} -
+ */ 
+export function ${rename}(map) {
+  return {
+    '${pkgName}': __UnExportList.map(v => map && map[v] ? [v, map[v]] : v),
+  }
+}`)
+
+  const val = typescript ? TS : JS
 
   return {
     data: `${val.trim()}\n`,

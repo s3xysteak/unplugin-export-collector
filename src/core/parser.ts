@@ -32,8 +32,7 @@ export async function parser(content: string): Promise<ParseValue> {
   const exp: string[] = []
   const refer: string[] = []
 
-  const pkg = await getPkg()
-  const isTs = pkg.devDependencies?.typescript || pkg.dependencies?.typescript
+  const { raw: pkg, isTs } = await getPkg()
 
   const module = await swcParse(content, {
     syntax: isTs ? 'typescript' : 'ecmascript',

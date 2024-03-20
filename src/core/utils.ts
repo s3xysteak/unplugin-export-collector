@@ -26,7 +26,10 @@ export async function findPath(rawPath: string, base?: string) {
 export async function getPkg(path?: string) {
   const pkgPath = path ? normalize(path) : resolve(process.cwd(), './package.json')
   const pkg = await fs.readFile(pkgPath, 'utf-8').then(val => JSON.parse(val))
-  return pkg
+  return {
+    raw: pkg,
+    isTs: pkg?.devDependencies?.typescript || pkg?.dependencies?.typescript,
+  }
 }
 
 /** return extension with `.` */
