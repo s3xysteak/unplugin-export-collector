@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process'
 import * as process from 'node:process'
 
-const versionList = ['major', 'minor', 'patch'] as const
+const versionList = ['major', 'minor', 'patch', 'premajor', 'preminor', 'prepatch', 'prerelease'] as const
 type Version = (typeof versionList)[number]
 
 const version = process.argv[2] as Version
