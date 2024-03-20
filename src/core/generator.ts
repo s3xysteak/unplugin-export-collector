@@ -57,12 +57,11 @@ ${content.substring(0, firstComment).trim()}
 
 ${comment}
 
-const exportList = ${JSON.stringify(exportList)} as const
+const __UnExportList = ${JSON.stringify(exportList)} as const
 
-export type UnpluginExportCollectorAutoImportMap = { [K in typeof exportList[number]]: string }
-export function ${rename}(map?: Partial<UnpluginExportCollectorAutoImportMap>): Record<string, (string | [string, string])[]> {
+export function ${rename}(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>): Record<string, (string | [string, string])[]> {
   return {
-    '${pkgName}': exportList.map(v => map && map[v] ? [v, map[v]] as [string, string] : v),
+    '${pkgName}': __UnExportList.map(v => map && map[v] ? [v, map[v]] as [string, string] : v),
   }
 }
 
