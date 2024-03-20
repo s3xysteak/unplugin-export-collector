@@ -4,6 +4,12 @@ English | [简体中文](./README-zh.md)
 
 ESM export collector with out-of-the-box support `unplugin-auto-import`.
 
+## :hammer: Install
+
+```sh
+$ pnpm i -D unplugin-export-collector
+```
+
 ## :rocket: Feature
 
 Recursively collect all named exports from an ESM file.

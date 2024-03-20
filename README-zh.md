@@ -4,6 +4,12 @@
 
 收集ESM所有导出的工具，附带开箱即用的 `unplugin-auto-import` 支持。
 
+## :hammer: Install
+
+```sh
+$ pnpm i -D unplugin-export-collector
+```
+
 ## :rocket: 功能
 
 从一个ESM文件中递归的收集所有具名导出。
