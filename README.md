@@ -24,7 +24,7 @@ in `src/func1.ts` is:
 ```js
 // src/func1.ts
 function func1() {}
-export { func1 as fRe }
+export { func1 as funcRe }
 ```
 
 In `src/index.ts` after building:
