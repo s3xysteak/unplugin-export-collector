@@ -2,7 +2,7 @@ import process from 'node:process'
 import { createUnplugin } from 'unplugin'
 import { resolve } from 'pathe'
 import { addExtension } from './utils'
-import { type ExpGeneratorOptions, expGeneratorData } from './generator'
+import { type ExpGeneratorOptions, expGenerator } from './generator'
 
 export interface UnpluginFactoryOptions extends ExpGeneratorOptions {
   entries: string[]
@@ -16,7 +16,9 @@ export default createUnplugin<Partial<UnpluginFactoryOptions>>((options = {}) =>
 
   return {
     name: 'unplugin-auto-import-generator',
-    transformInclude: id => _entries.includes(id),
-    transform: async (_, id) => (await expGeneratorData(id, options)).data,
+    async buildStart() {
+      for (const entry of _entries)
+        await expGenerator(entry, options)
+    },
   }
 })
