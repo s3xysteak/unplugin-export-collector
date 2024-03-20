@@ -1,7 +1,7 @@
 {
   "name": "export-collector",
   "type": "module",
-  "version": "0.2.0-0",
+  "version": "0.2.1-0",
   "private": false,
   "description": "export-collector",
   "author": "s3xysteak",
