@@ -171,7 +171,7 @@ ExportCollector({
 Use like :
 
 ```js
-import { expCollector } from 'unplugin-export-collector'
+import { expCollector } from 'unplugin-export-collector/core'
 
 const val = await expCollector('./src/index.ts') // base on root as default.
 
