@@ -1,18 +1,20 @@
 {
-  "name": "export-collector",
+  "name": "unplugin-export-collector",
   "type": "module",
   "version": "0.2.1-0",
   "private": false,
-  "description": "export-collector",
+  "description": "Recursively get all named export from a file and out-of-the-box support unplugin-auto-import",
   "author": "s3xysteak",
   "license": "MIT",
-  "homepage": "https://github.com/s3xysteak/export-collector",
+  "homepage": "https://github.com/s3xysteak/unplugin-export-collector",
   "repository": {
     "type": "git",
-    "url": "https://github.com/s3xysteak/export-collector.git"
+    "url": "https://github.com/s3xysteak/unplugin-export-collector.git"
   },
-  "bugs": "https://github.com/s3xysteak/export-collector/issues",
+  "bugs": "https://github.com/s3xysteak/unplugin-export-collector/issues",
   "keywords": [
+    "unplugin",
+    "unplugin-auto-import",
     "type",
     "utils"
   ],
@@ -60,6 +62,16 @@
       "require": {
         "types": "./dist/esbuild.d.cts",
         "default": "./dist/esbuild.cjs"
+      }
+    },
+    "./webpack": {
+      "import": {
+        "types": "./dist/webpack.d.mts",
+        "default": "./dist/webpack.mjs"
+      },
+      "require": {
+        "types": "./dist/webpack.d.cts",
+        "default": "./dist/webpack.cjs"
       }
     }
   },
