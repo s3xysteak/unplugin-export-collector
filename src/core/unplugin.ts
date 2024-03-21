@@ -8,7 +8,7 @@ export interface UnpluginFactoryOptions extends ExpGeneratorOptions {
   entries: string[]
 }
 
-export default createUnplugin<Partial<UnpluginFactoryOptions>>((options = {}) => {
+export default createUnplugin<Partial<UnpluginFactoryOptions> | undefined>((options = {}) => {
   const {
     entries = ['./src/index.ts'],
   } = options
