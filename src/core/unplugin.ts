@@ -16,7 +16,7 @@ export default createUnplugin<Callable<Awaitable<Partial<UnpluginFactoryOptions>
       options = await toPromise(options)
 
       const {
-        entries = ['./src/index.ts'],
+        entries = ['./src/index'],
       } = options
 
       const _entries = entries

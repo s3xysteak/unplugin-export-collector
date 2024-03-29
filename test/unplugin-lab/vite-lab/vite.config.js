@@ -4,9 +4,7 @@ import ExportCollector from '../../../src/vite'
 
 export default defineConfig({
   plugins: [
-    ExportCollector({
-      entries: ['./src/index.js'],
-    }),
+    ExportCollector(),
   ],
   build: {
     lib: {
