@@ -94,16 +94,16 @@
     "lint-fix": "eslint . --fix"
   },
   "dependencies": {
-    "@s3xysteak/utils": "^0.1.8",
-    "@swc/core": "^1.4.8",
+    "@s3xysteak/utils": "^0.2.1",
+    "@swc/core": "^1.4.11",
     "unplugin": "^1.10.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.8.3",
+    "@antfu/eslint-config": "^2.11.4",
     "@types/node": "^20.11.30",
     "eslint": "^8.57.0",
     "pathe": "^1.1.2",
-    "typescript": "^5.4.2",
+    "typescript": "^5.4.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.4.0"
   }
