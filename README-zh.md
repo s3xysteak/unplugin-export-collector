@@ -33,7 +33,16 @@ function func1() {}
 export { func1 as funcRe }
 ```
 
-打包后的 `src/index.ts`:
+只获取所以具名导出:
+
+```js
+import { expCollector } from 'unplugin-export-collector/core'
+
+console.log(await expCollector('./src/index.ts'))
+// ['one', 'funcRe']
+```
+
+或者支持 `unplugin-auto-import`。 这是打包后的 `src/index.ts`:
 
 ```ts
 // src/index.ts

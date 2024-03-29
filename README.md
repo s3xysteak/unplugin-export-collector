@@ -33,7 +33,16 @@ function func1() {}
 export { func1 as funcRe }
 ```
 
-In `src/index.ts` after building:
+Just get named export list:
+
+```js
+import { expCollector } from 'unplugin-export-collector/core'
+
+console.log(await expCollector('./src/index.ts'))
+// ['one', 'funcRe']
+```
+
+Or support `unplugin-auto-import`. In `src/index.ts` after building:
 
 ```js
 // src/index.ts
