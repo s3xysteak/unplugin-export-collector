@@ -5,11 +5,8 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
-  typescript:
-    specifier: ^5.3.3
-    version: 5.4.3
   vite:
-    specifier: ^5.0.10
+    specifier: ^5.2.7
     version: 5.2.7
 
 packages:
@@ -431,12 +428,6 @@ packages:
   /source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
-    dev: true
-
-  /typescript@5.4.3:
-    resolution: {integrity: sha512-KrPd3PKaCLr78MalgiwJnA25Nm8HAmdwN3mYUYZgG/wizIo9EainNVQI9/yDavtVFRN2h3k8uf3GLHuhDMgEHg==}
-    engines: {node: '>=14.17'}
-    hasBin: true
     dev: true
 
   /vite@5.2.7:

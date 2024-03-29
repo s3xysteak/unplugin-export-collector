@@ -4,16 +4,15 @@ import ExportCollector from '../../../src/vite'
 
 export default defineConfig({
   plugins: [
-    ExportCollector(async () => {
-      return {
-        include: ['hi'],
-      }
-    }) as any,
+    ExportCollector({
+      entries: ['./src/index.js'],
+    }),
   ],
   build: {
     lib: {
-      formats: ['es'],
-      entry: './src/index.ts',
+      format: ['es'],
+      entry: './src/index.js',
+      name: 'viteLab',
       fileName: 'index',
     },
   },
