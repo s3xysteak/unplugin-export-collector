@@ -9,8 +9,8 @@ export function func3() {
 const __UnExportList = /** @type {const} */ (["func1","func3","funcRe"])
 
 /**
- * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} map
- * @returns {Record<string, (string | [string, string])[]>} -
+ * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} [map]
+ * @returns {Record<string, (string | [string, string])[]>} Use in `imports` option of `unplugin-auto-import`.
  */ 
 export function autoImport(map) {
   return {

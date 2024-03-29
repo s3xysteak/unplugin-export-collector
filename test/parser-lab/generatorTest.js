@@ -14,8 +14,8 @@ export * from '@s3xysteak/utils'
 const __UnExportList = /** @type {const} */ (["ClassIndex","custom","fRe","func1","func2","func3","funcIndex","getThree","two"])
 
 /**
- * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} map
- * @returns {Record<string, (string | [string, string])[]>} -
+ * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} [map]
+ * @returns {Record<string, (string | [string, string])[]>} Use in `imports` option of `unplugin-auto-import`.
  */ 
 export function autoImport(map) {
   return {

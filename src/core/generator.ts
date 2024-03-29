@@ -69,6 +69,9 @@ ${content.substring(lastComment).trim()}
   const TS = getTemplate(`
 const __UnExportList = ${JSON.stringify(exportList)} as const
 
+/**
+ * @returns Use in \`imports\` option of unplugin-auto-import.
+ */
 export function ${rename}(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>): Record<string, (string | [string, string])[]> {
   return {
     '${pkgName}': __UnExportList.map(v => map && map[v] ? [v, map[v]] as [string, string] : v),
@@ -79,8 +82,8 @@ export function ${rename}(map?: Partial<{ [K in typeof __UnExportList[number]]: 
 const __UnExportList = /** @type {const} */ (${JSON.stringify(exportList)})
 
 /**
- * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} map
- * @returns {Record<string, (string | [string, string])[]>} -
+ * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} [map]
+ * @returns {Record<string, (string | [string, string])[]>} Use in \`imports\` option of \`unplugin-auto-import\`.
  */ 
 export function ${rename}(map) {
   return {
