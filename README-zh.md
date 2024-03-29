@@ -33,7 +33,7 @@ function func1() {}
 export { func1 as funcRe }
 ```
 
-只获取所以具名导出:
+只是获取所有具名导出:
 
 ```js
 import { expCollector } from 'unplugin-export-collector/core'
