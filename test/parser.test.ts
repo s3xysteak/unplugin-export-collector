@@ -9,7 +9,7 @@ describe('parser', () => {
     const content = await fs.readFile(
       resolve(
         fileURLToPath(new URL('./', import.meta.url)),
-        './parserLab/index.ts',
+        './parser-lab/index.ts',
       ),
       'utf-8',
     )
@@ -22,7 +22,7 @@ describe('parser', () => {
   it('expCollector', async () => {
     const target = ['one', 'two', 'getThree', 'funcIndex', 'ClassIndex', 'func1', 'func2', 'func3', 'fRe'].sort()
 
-    const result = await expCollector('./test/parserLab').then(res => res.sort())
+    const result = await expCollector('./test/parser-lab').then(res => res.sort())
     expect(result).toEqual(target)
   })
 })
