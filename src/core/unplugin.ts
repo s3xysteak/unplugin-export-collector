@@ -17,11 +17,12 @@ export default createUnplugin<Callable<Awaitable<Partial<UnpluginFactoryOptions>
 
       const {
         entries = ['./src/index'],
+        base = process.cwd(),
       } = options
 
       const _entries = entries
-        .map(addExtension)
-        .map(entry => resolve(process.cwd(), entry))
+        .map(path => addExtension(path, base))
+        .map(entry => resolve(base, entry))
 
       for (const entry of _entries)
         await expGenerator(entry, options)

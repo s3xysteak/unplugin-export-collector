@@ -16,7 +16,7 @@ export async function findPath(rawPath: string, base?: string) {
       ? resolve(_p, 'index')
       : _p
 
-  const ext = findExtension(p)
+  const ext = findExtension(p, base)
   if (isUndefined(ext))
     throw new Error(`File not found: ${p}`)
 
@@ -36,14 +36,14 @@ export async function getPkg(path?: string) {
 }
 
 /** return extension with `.` */
-export function findExtension(path: string) {
-  const p = resolve(process.cwd(), path)
+export function findExtension(path: string, base: string = process.cwd()) {
+  const p = resolve(base, path)
   const extensionList = ['', '.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']
 
   const ext = extensionList.find(ext => existsSync(p + ext))
   return ext
 }
 
-export function addExtension(path: string) {
-  return path + findExtension(path)
+export function addExtension(path: string, base: string = process.cwd()) {
+  return path + findExtension(path, base)
 }
