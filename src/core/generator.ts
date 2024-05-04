@@ -16,6 +16,7 @@ interface ExpGeneratorDataOptions {
   exclude: string[]
   rename: string
   typescript: boolean
+  exportDefault: boolean
 }
 
 export interface ExpGeneratorOptions extends ExpGeneratorDataOptions {
@@ -54,6 +55,7 @@ export async function expGeneratorData(path: string, options?: Partial<ExpGenera
     exclude = [],
     rename = 'autoImport',
     typescript = isTs,
+    exportDefault = false,
   } = options ?? {}
 
   exclude.push(rename)
@@ -95,7 +97,7 @@ const __UnExportList = ${JSON.stringify(exportList)} as const
 /**
  * @returns - Call in \`resolvers\` option of \`unplugin-auto-import\`.
  */
-export function ${rename}(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>) {
+${exportDefault ? 'export default' : 'export'} function ${rename}(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>) {
   return (name: string) => {
     if (!__UnExportList.includes(name as any))
       return
@@ -122,7 +124,7 @@ const __UnExportList = /** @type {const} */ (${JSON.stringify(exportList)})
  * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} [map]
  * @returns - Call in \`resolvers\` option of \`unplugin-auto-import\`.
  */
-export function ${rename}(map) {
+${exportDefault ? 'export default' : 'export'} function ${rename}(map) {
   /** @param {string} name */
   const func = (name) => {
     if (!__UnExportList.includes(name))
