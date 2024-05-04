@@ -6,6 +6,10 @@ import { addExtension } from './utils'
 import { type ExpGeneratorOptions, expGenerator } from './generator'
 
 export interface UnpluginFactoryOptions extends ExpGeneratorOptions {
+  /**
+   * The list of entry files to generate the auto import.
+   * @default ['./src/index']
+   */
   entries: string[]
 }
 

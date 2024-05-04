@@ -10,16 +10,53 @@ const firstIndex = (content: string) => content.indexOf(comment)
 const lastIndex = (content: string) => content.lastIndexOf(comment) + comment.length
 
 interface ExpGeneratorDataOptions {
+  /**
+   * The base path of the project.
+   * @default process.cwd()
+   */
   base: string
+
+  /**
+   * The package name of the project. The default value is the name of the `package.json`.
+   * @default pkg.name
+   */
   pkgName: string
+
+  /**
+   * The list of exports to include.
+   * @default []
+   */
   include: string[]
+
+  /**
+   * The list of exports to exclude.
+   * @default []
+   */
   exclude: string[]
+
+  /**
+   * The name of the export function.
+   * @default 'autoImport'
+   */
   rename: string
+
+  /**
+   * Whether to use TypeScript. The default value will be auto detected by `package.json`.
+   * @default isTs
+   */
   typescript: boolean
+
+  /**
+   * Whether to export the function as default.
+   * @default false
+   */
   exportDefault: boolean
 }
 
 export interface ExpGeneratorOptions extends ExpGeneratorDataOptions {
+  /**
+   * The path to write the generated file. The default value is the path of the entry file.
+   */
   writeTo: string
 }
 
