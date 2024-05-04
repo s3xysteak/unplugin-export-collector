@@ -15,7 +15,7 @@ const __UnExportList = /** @type {const} */ (["ClassIndex","custom","fRe","func1
 
 /**
  * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} [map]
- * @returns - Call in `resolvers` option of `unplugin-auto-import`.
+ * @returns Call in `resolvers` option of `unplugin-auto-import`.
  */
 export function autoImport(map) {
   /** @param {string} name */

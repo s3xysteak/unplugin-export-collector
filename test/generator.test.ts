@@ -26,7 +26,7 @@ export * from '@s3xysteak/utils'
 const __UnExportList = ${JSON.stringify(exportList)} as const
 
 /**
- * @returns - Call in \`resolvers\` option of \`unplugin-auto-import\`.
+ * @returns Call in \`resolvers\` option of \`unplugin-auto-import\`.
  */
 export function autoImport(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>) {
   return (name: string) => {
@@ -77,7 +77,7 @@ const __UnExportList = /** @type {const} */ (${JSON.stringify(exportList)})
 
 /**
  * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} [map]
- * @returns - Call in \`resolvers\` option of \`unplugin-auto-import\`.
+ * @returns Call in \`resolvers\` option of \`unplugin-auto-import\`.
  */
 export function autoImport(map) {
   /** @param {string} name */
@@ -117,7 +117,7 @@ export function autoImport(map) {
 const __UnExportList = ${JSON.stringify(exportList)} as const
 
 /**
- * @returns - Call in \`resolvers\` option of \`unplugin-auto-import\`.
+ * @returns Call in \`resolvers\` option of \`unplugin-auto-import\`.
  */
 export function autoImport(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>) {
   return (name: string) => {

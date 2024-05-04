@@ -132,7 +132,7 @@ ${content.substring(lastComment).trim()}
 const __UnExportList = ${JSON.stringify(exportList)} as const
 
 /**
- * @returns - Call in \`resolvers\` option of \`unplugin-auto-import\`.
+ * @returns Call in \`resolvers\` option of \`unplugin-auto-import\`.
  */
 ${exportDefault ? 'export default' : 'export'} function ${rename}(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>) {
   return (name: string) => {
@@ -159,7 +159,7 @@ const __UnExportList = /** @type {const} */ (${JSON.stringify(exportList)})
 
 /**
  * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} [map]
- * @returns - Call in \`resolvers\` option of \`unplugin-auto-import\`.
+ * @returns Call in \`resolvers\` option of \`unplugin-auto-import\`.
  */
 ${exportDefault ? 'export default' : 'export'} function ${rename}(map) {
   /** @param {string} name */
