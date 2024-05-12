@@ -7,21 +7,23 @@ import { p } from '@s3xysteak/utils'
 import { findPath, getPkg } from './utils'
 
 export async function expCollector(path: string, base?: string): Promise<string[]> {
-  const result: string[] = []
+  const result = new Set<string>()
 
   const recursion = async (path: string, base?: string) => {
     const filePath = await findPath(path, base)
     const content = await fs.readFile(filePath, 'utf-8')
 
     const { exp, refer } = await parser(content)
-    result.push(...exp)
+
+    exp.forEach((val) => { result.add(val) })
+
     await p(refer, { concurrency: Number.POSITIVE_INFINITY })
       .forEach(async path => await recursion(path, dirname(filePath)))
   }
 
   await recursion(path, base ?? process.cwd())
 
-  return result
+  return Array.from(result)
 }
 
 export interface ParseValue {
