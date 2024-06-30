@@ -14,6 +14,9 @@ importers:
       '@swc/core':
         specifier: ^1.6.6
         version: 1.6.6
+      pathe:
+        specifier: ^1.1.2
+        version: 1.1.2
       unplugin:
         specifier: ^1.11.0
         version: 1.11.0
@@ -27,9 +30,6 @@ importers:
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
-      pathe:
-        specifier: ^1.1.2
-        version: 1.1.2
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
