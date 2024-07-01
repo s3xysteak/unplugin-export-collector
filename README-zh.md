@@ -189,7 +189,10 @@ console.log(val)
 // ...
 const val = await expCollector(
   './index.ts',
-  fileURLToPath(new URL('./src/', import.meta.url))
+  {
+    base: fileURLToPath(new URL('./src/', import.meta.url))
+    // alias: { '~': fileURLToPath(new URL('.', import.meta.url)) } // 也支持别名
+  }
 )
 // 结果将会和上面的例子相同。
 ```

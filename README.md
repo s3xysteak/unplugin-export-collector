@@ -189,7 +189,10 @@ Or customize the base path.
 // ...
 const val = await expCollector(
   './index.ts',
-  fileURLToPath(new URL('./src/index.ts', import.meta.url))
+  {
+    base: fileURLToPath(new URL('./src/index.ts', import.meta.url))
+    // alias: { '~': fileURLToPath(new URL('.', import.meta.url)) } // Also support aliases.
+  }
 )
 // the value will be same as above example.
 ```
