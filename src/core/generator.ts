@@ -51,6 +51,8 @@ interface ExpGeneratorDataOptions {
    * @default false
    */
   exportDefault: boolean
+
+  alias: Record<string, string>
 }
 
 export interface ExpGeneratorOptions extends ExpGeneratorDataOptions {
@@ -73,7 +75,7 @@ export async function expGenerator(path: string, options: Partial<ExpGeneratorOp
   if (isUndefined(options?.writeTo))
     return await fs.writeFile(targetPath, data)
 
-  const extension = (path: string) => /\.\w+?$/.test(path)
+  const extension = (path: string) => /\.\w+$/.test(path)
     ? path
     : `${path}.${isTs ? 'ts' : 'js'}`
 
@@ -93,13 +95,14 @@ export async function expGeneratorData(path: string, options?: Partial<ExpGenera
     rename = 'autoImport',
     typescript = isTs,
     exportDefault = false,
+    alias,
   } = options ?? {}
 
   exclude.push(rename)
 
   const targetPath = await findPath(path, base)
 
-  const expList = await expCollector(path, base)
+  const expList = await expCollector(path, { base, alias })
   let content = await fs.readFile(targetPath, 'utf-8')
 
   const _firstComment = firstIndex(content)

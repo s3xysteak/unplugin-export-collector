@@ -5,8 +5,19 @@ import { parse as swcParse } from '@swc/core'
 import { p } from '@s3xysteak/utils'
 
 import { findPath, getPkg } from './utils'
+import { resolveAlias } from './alias'
 
-export async function expCollector(path: string, base?: string): Promise<string[]> {
+interface ExpCollectorOptions {
+  base?: string
+  alias?: Record<string, string>
+}
+
+export async function expCollector(path: string, options?: ExpCollectorOptions): Promise<string[]> {
+  const {
+    base,
+    alias = {},
+  } = options ?? {}
+
   const result = new Set<string>()
 
   const recursion = async (path: string, base?: string) => {
@@ -18,7 +29,7 @@ export async function expCollector(path: string, base?: string): Promise<string[
     exp.forEach((val) => { result.add(val) })
 
     await p(refer, { concurrency: Number.POSITIVE_INFINITY })
-      .forEach(async path => await recursion(path, dirname(filePath)))
+      .forEach(async path => await recursion(resolveAlias(path, alias), dirname(filePath)))
   }
 
   await recursion(path, base ?? process.cwd())
