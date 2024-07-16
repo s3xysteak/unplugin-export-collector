@@ -14,14 +14,13 @@ $ pnpm i -D unplugin-export-collector
 
 从一个ESM文件中递归的收集所有具名导出。
 
-> 目前不支持从别名路径进行重导出。 如 `export * from '@core/index'` -> `export * from './core/index'`.
-
 假设有 `src/index.ts` :
 
 ```js
 // src/index.ts
 export const one = 1
 export * from './func1' // 从另一个文件导出。
+// export * from '~/func2' // 也支持别名
 export * from 'vue' // 依赖的重导出将会被忽略。
 ```
 
