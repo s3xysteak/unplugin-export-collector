@@ -8,9 +8,9 @@ describe('utils-general', () => {
 
   it('findPath', async () => {
     const generate = (path: string) => findPath(path, base)
-    const target = resolve(base, './parser-lab/index.ts')
+    const target = resolve(base, './parser-lab/index.js')
 
-    expect(await generate('./parser-lab/index.ts')).toBe(target)
+    expect(await generate('./parser-lab/index.ts')).toBe(resolve(base, './parser-lab/index.ts'))
     expect(await generate('./parser-lab/index')).toBe(target)
     expect(await generate('./parser-lab')).toBe(target)
   })

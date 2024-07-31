@@ -1,11 +1,10 @@
 import process from 'node:process'
 import { promises as fs } from 'node:fs'
-import { isUndefined } from '@s3xysteak/utils'
 import { extname, resolve } from 'pathe'
 import { expCollector } from './parser'
-import { findPath, getPkg } from './utils'
+import { getPkg } from './utils'
 
-import { COMMENT, generateTemplate, importsTemplate, resolversTemplate } from './template'
+import { COMMENT, importsTemplate, resolversTemplate } from './template'
 
 interface ExpGeneratorDataOptions {
   /**
@@ -46,7 +45,7 @@ interface ExpGeneratorDataOptions {
 
   /**
    * Whether to export the function as default.
-   * @default false
+   * @default true
    */
   exportDefault: boolean
 
@@ -61,7 +60,14 @@ interface ExpGeneratorDataOptions {
 
 export interface ExpGeneratorOptions extends ExpGeneratorDataOptions {
   /**
-   * The path to write the generated file. The default value is the path of the entry file.
+   * The path to write the generated file. The default value will be automatically resolved by the plugin.
+   *
+   * @example
+   * Values below are possible values by default
+   * './src/imports.ts'
+   * './src/imports.js'
+   * './src/resolvers.ts'
+   * './src/resolvers.js'
    */
   writeTo: string
 }
@@ -71,21 +77,20 @@ export interface ExpGeneratorOptions extends ExpGeneratorDataOptions {
 export async function expGenerator(path: string, options: Partial<ExpGeneratorOptions> = {}) {
   const {
     data,
-    dataRaw,
-    targetPath,
     pkgContext: { isTs },
   } = await expGeneratorData(path, options)
 
   const {
+    type = 'imports',
+    typescript = isTs,
     base = process.cwd(),
+    writeTo = `./src/${type}.${typescript ? 'ts' : 'js'}`,
   } = options
 
-  return isUndefined(options?.writeTo)
-    ? await fs.writeFile(targetPath, data)
-    : await fs.writeFile(
-      resolve(base, extname(options.writeTo) || `${options.writeTo}.${isTs ? 'ts' : 'js'}`),
-      dataRaw,
-    )
+  return await fs.writeFile(
+    resolve(base, extname(writeTo) ? writeTo : `${writeTo}.${typescript ? 'ts' : 'js'}`),
+    data,
+  )
 }
 
 export async function expGeneratorData(path: string, options?: Partial<ExpGeneratorDataOptions>) {
@@ -98,37 +103,31 @@ export async function expGeneratorData(path: string, options?: Partial<ExpGenera
     exclude = [],
     rename = 'autoImport',
     typescript = isTs,
-    exportDefault = false,
+    exportDefault = true,
     alias,
     type = 'imports',
   } = options ?? {}
 
   exclude.push(rename)
 
-  const targetPath = await findPath(path, base)
-
   const expList = await expCollector(path, { base, alias })
-  const content = await fs.readFile(targetPath, 'utf-8')
 
   const exportList = [...expList, ...include].filter(i => !exclude.includes(i)).sort()
 
-  const valRaw = type === 'imports'
+  const val = type === 'imports'
     ? importsTemplate(exportList, pkgName, rename, exportDefault)[typescript ? 'ts' : 'js']
     : resolversTemplate(exportList, pkgName, rename, exportDefault)[typescript ? 'ts' : 'js']
 
-  const val = generateTemplate(content, valRaw).trim()
-  const dataRaw = `
+  const data = `
 ${COMMENT}
 
-${valRaw.trim()}
+${val.trim()}
 
 ${COMMENT}
 `.trim()
 
   return {
-    data: `${val}\n`,
-    dataRaw: `${dataRaw}\n`,
-    targetPath,
+    data: `${data}\n`,
     pkgContext: {
       pkg,
       isTs,

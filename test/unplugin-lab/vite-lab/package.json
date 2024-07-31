@@ -4,7 +4,15 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "import": "./dist/index.js"
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./imports": {
+      "import": "./dist/imports.js"
+    },
+    "./resolvers": {
+      "import": "./dist/resolvers.js"
+    }
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
