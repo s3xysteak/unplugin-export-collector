@@ -20,7 +20,7 @@ Consumed in `src/index.ts` is:
 // src/index.ts
 export const one = 1
 export * from './func1' // export from another file.
-// export * from '~/func2' // Also support aliases. 
+// export * from '~/func2' // Also support aliases.
 export * from 'vue' // reExport from deps will be ignored.
 ```
 
@@ -43,7 +43,7 @@ console.log(await expCollector('./src/index.ts'))
 
 Or support `unplugin-auto-import`. In `src/index.ts` after building:
 
-```js
+```ts
 // src/index.ts
 export const one = 1
 export * from './func1' // export from another file.

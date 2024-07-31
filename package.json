@@ -86,12 +86,12 @@
   },
   "scripts": {
     "build": "tsc && unbuild",
-    "build-only": "unbuild",
+    "build:only": "unbuild",
     "test": "vitest",
-    "test-once": "vitest run",
+    "test:once": "vitest run",
     "release": "esno ./scripts/release.ts",
     "lint": "eslint .",
-    "lint-fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@s3xysteak/utils": "^0.7.3",

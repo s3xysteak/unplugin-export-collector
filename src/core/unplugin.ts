@@ -1,9 +1,9 @@
 import process from 'node:process'
 import { createUnplugin } from 'unplugin'
 import { resolve } from 'pathe'
-import { type Awaitable, type Callable, toPromise } from '@s3xysteak/utils'
-import { addExtension } from './utils'
-import { type ExpGeneratorOptions, expGenerator } from './generator'
+import type { Awaitable, Callable } from '@s3xysteak/utils'
+import { addExtension, toValue } from './utils'
+import { type ExpGeneratorOptions, expGenerator } from '.'
 
 export interface UnpluginFactoryOptions extends ExpGeneratorOptions {
   /**
@@ -17,7 +17,7 @@ export default createUnplugin<Callable<Awaitable<Partial<UnpluginFactoryOptions>
   return {
     name: 'unplugin-auto-import-generator',
     async buildStart() {
-      options = await toPromise(options)
+      options = await toValue(options)
 
       const {
         entries = ['./src/index'],

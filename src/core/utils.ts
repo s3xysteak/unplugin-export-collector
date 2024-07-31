@@ -1,6 +1,6 @@
 import process from 'node:process'
 import { existsSync, promises as fs } from 'node:fs'
-import { isUndefined } from '@s3xysteak/utils'
+import { isFunction, isUndefined } from '@s3xysteak/utils'
 import { normalize, resolve } from 'pathe'
 
 export async function isDirectory(path: string) {
@@ -46,4 +46,8 @@ export function findExtension(path: string, base: string = process.cwd()) {
 
 export function addExtension(path: string, base: string = process.cwd()) {
   return path + findExtension(path, base)
+}
+
+export function toValue<T>(val: T | ((...args: any) => T)) {
+  return isFunction(val) ? val() : val
 }

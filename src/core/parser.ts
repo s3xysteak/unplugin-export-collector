@@ -26,7 +26,7 @@ export async function expCollector(path: string, options?: ExpCollectorOptions):
 
     const { exp, refer } = await parser(content)
 
-    exp.forEach((val) => { result.add(val) })
+    exp.forEach(val => result.add(val))
 
     await p(refer, { concurrency: Number.POSITIVE_INFINITY })
       .forEach(async path => await recursion(resolveAlias(path, alias), dirname(filePath)))
@@ -66,12 +66,16 @@ export async function parser(content: string): Promise<ParseValue> {
     }
 
     if (node.type === 'ExportDeclaration') {
-      node.declaration.type === 'VariableDeclaration' && node.declaration.declarations.forEach((declaration) => {
-        declaration.id.type === 'Identifier' && exp.push(declaration.id.value)
-      })
+      if (node.declaration.type === 'VariableDeclaration') {
+        node.declaration.declarations.forEach(declaration =>
+          declaration.id.type === 'Identifier' && exp.push(declaration.id.value),
+        )
+      }
 
-      node.declaration.type === 'FunctionDeclaration' && exp.push(node.declaration.identifier.value)
-      node.declaration.type === 'ClassDeclaration' && exp.push(node.declaration.identifier.value)
+      if (node.declaration.type === 'FunctionDeclaration')
+        exp.push(node.declaration.identifier.value)
+      if (node.declaration.type === 'ClassDeclaration')
+        exp.push(node.declaration.identifier.value)
     }
   })
 

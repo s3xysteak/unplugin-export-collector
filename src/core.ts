@@ -1,2 +1,2 @@
 export * from './core/parser'
-export * from './core/generator'
+export * from './core/index'

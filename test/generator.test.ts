@@ -2,7 +2,7 @@ import { promises as fs } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { toLF } from '@s3xysteak/utils'
-import { expGenerator } from '@/core/generator'
+import { expGenerator } from '@/core/index'
 
 describe.concurrent('generate', () => {
   /** TS */
