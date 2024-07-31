@@ -26,15 +26,42 @@ ${content.substring(lastComment).trim()}
 `
 }
 
-// export function resolversImports(exportList: string[], pkgName: string, rename: string, exportDefault: boolean) {
-//   return {
-//     ts: ``,
-//     js: ``,
-//   }
-// }
+export function importsTemplate(exportList: string[], pkgName: string, rename: string, exportDefault: boolean) {
+  return {
+    // * typescript
+    ts: `
+const __UnExportList = ${JSON.stringify(exportList)} as const
+
+/**
+ * @returns Call in \`imports\` option of \`unplugin-auto-import\`.
+ */
+${exportDefault ? 'export default' : 'export'} function ${rename}(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>): Record<string, (string | [string, string])[]> {
+  return {
+    '${pkgName}': __UnExportList.map(v => map && map[v] ? [v, map[v]] as [string, string] : v),
+  }
+}
+`,
+
+    // * javascript
+    js: `
+const __UnExportList = /** @type {const} */ (${JSON.stringify(exportList)})
+
+/**
+ * @param {Partial<{ [K in typeof __UnExportList[number]]: string }>} [map]
+ * @returns {Record<string, (string | [string, string])[]>} Call in \`imports\` option of \`unplugin-auto-import\`.
+ */
+${exportDefault ? 'export default' : 'export'} function ${rename}(map) {
+  return {
+    '${pkgName}': __UnExportList.map(v => map && map[v] ? [v, map[v]] : v),
+  }
+}
+`,
+  }
+}
 
 export function resolversTemplate(exportList: string[], pkgName: string, rename: string, exportDefault: boolean) {
   return {
+    // * typescript
     ts: `
 const __UnExportList = ${JSON.stringify(exportList)} as const
 
@@ -59,6 +86,8 @@ ${exportDefault ? 'export default' : 'export'} function ${rename}(map?: Partial<
   }
 }
 `,
+
+    // * javascript
     js: `
 const __UnExportList = /** @type {const} */ (${JSON.stringify(exportList)})
 

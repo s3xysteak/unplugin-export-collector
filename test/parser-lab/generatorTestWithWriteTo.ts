@@ -3,23 +3,11 @@
 const __UnExportList = ["ClassIndex","custom","fRe","func1","func2","func3","funcIndex","getThree","two"] as const
 
 /**
- * @returns Call in `resolvers` option of `unplugin-auto-import`.
+ * @returns Call in `imports` option of `unplugin-auto-import`.
  */
-export function autoImport(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>) {
-  return (name: string) => {
-    if (!__UnExportList.includes(name as any))
-      return
-
-    return map && (map as any)[name]
-      ? {
-          name,
-          as: (map as any)[name],
-          from: 'unplugin-export-collector',
-        }
-      : {
-          name,
-          from: 'unplugin-export-collector',
-        }
+export function autoImport(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>): Record<string, (string | [string, string])[]> {
+  return {
+    'unplugin-export-collector': __UnExportList.map(v => map && map[v] ? [v, map[v]] as [string, string] : v),
   }
 }
 

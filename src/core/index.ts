@@ -5,7 +5,7 @@ import { extname, resolve } from 'pathe'
 import { expCollector } from './parser'
 import { findPath, getPkg } from './utils'
 
-import { COMMENT, generateTemplate, resolversTemplate } from './template'
+import { COMMENT, generateTemplate, importsTemplate, resolversTemplate } from './template'
 
 interface ExpGeneratorDataOptions {
   /**
@@ -51,6 +51,12 @@ interface ExpGeneratorDataOptions {
   exportDefault: boolean
 
   alias: Record<string, string>
+
+  /**
+   * unplugin-auto-import options
+   * @default 'imports'
+   */
+  type: 'imports' | 'resolvers'
 }
 
 export interface ExpGeneratorOptions extends ExpGeneratorDataOptions {
@@ -94,6 +100,7 @@ export async function expGeneratorData(path: string, options?: Partial<ExpGenera
     typescript = isTs,
     exportDefault = false,
     alias,
+    type = 'imports',
   } = options ?? {}
 
   exclude.push(rename)
@@ -105,7 +112,9 @@ export async function expGeneratorData(path: string, options?: Partial<ExpGenera
 
   const exportList = [...expList, ...include].filter(i => !exclude.includes(i)).sort()
 
-  const valRaw = resolversTemplate(exportList, pkgName, rename, exportDefault)[typescript ? 'ts' : 'js']
+  const valRaw = type === 'imports'
+    ? importsTemplate(exportList, pkgName, rename, exportDefault)[typescript ? 'ts' : 'js']
+    : resolversTemplate(exportList, pkgName, rename, exportDefault)[typescript ? 'ts' : 'js']
 
   const val = generateTemplate(content, valRaw).trim()
   const dataRaw = `
