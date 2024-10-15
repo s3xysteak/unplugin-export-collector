@@ -92,7 +92,7 @@
   },
   "dependencies": {
     "@s3xysteak/utils": "catalog:",
-    "@swc/core": "^1.7.3",
+    "@swc/core": "^1.7.35",
     "pathe": "catalog:",
     "unplugin": "catalog:"
   }
