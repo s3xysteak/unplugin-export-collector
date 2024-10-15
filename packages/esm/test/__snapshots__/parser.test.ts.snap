@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`esm parser > collect 1`] = `
+[
+  "one",
+  "shared",
+  "two",
+]
+`;
+
+exports[`esm parser > collect 2`] = `
+[
+  "one",
+  "shared",
+  "two",
+]
+`;
