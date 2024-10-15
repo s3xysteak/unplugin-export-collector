@@ -3,15 +3,8 @@ import { createUnplugin } from 'unplugin'
 import { resolve } from 'pathe'
 import type { Awaitable, Callable } from '@s3xysteak/utils'
 import { addExtension, toValue } from './utils'
-import { type ExpGeneratorOptions, expGenerator } from '.'
-
-export interface UnpluginFactoryOptions extends ExpGeneratorOptions {
-  /**
-   * The list of entry files to generate the auto import.
-   * @default ['./src/index']
-   */
-  entries: string[]
-}
+import type { UnpluginFactoryOptions } from './types'
+import { expGenerator } from '.'
 
 export default createUnplugin<Callable<Awaitable<Partial<UnpluginFactoryOptions>>> | undefined>((options = {}) => {
   return {

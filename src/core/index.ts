@@ -5,72 +5,8 @@ import { expCollector } from './parser'
 import { getPkg } from './utils'
 
 import { COMMENT, importsTemplate, resolversTemplate } from './template'
+import type { ExpGeneratorDataOptions, ExpGeneratorOptions } from './types'
 
-interface ExpGeneratorDataOptions {
-  /**
-   * The base path of the project.
-   * @default process.cwd()
-   */
-  base: string
-
-  /**
-   * The package name of the project. The default value is the name of the `package.json`.
-   * @default pkg.name
-   */
-  pkgName: string
-
-  /**
-   * The list of exports to include.
-   * @default []
-   */
-  include: string[]
-
-  /**
-   * The list of exports to exclude.
-   * @default []
-   */
-  exclude: string[]
-
-  /**
-   * The name of the export function.
-   * @default 'autoImport'
-   */
-  rename: string
-
-  /**
-   * Whether to use TypeScript. The default value will be auto detected by `package.json`.
-   * @default isTs
-   */
-  typescript: boolean
-
-  /**
-   * Whether to export the function as default.
-   * @default true
-   */
-  exportDefault: boolean
-
-  alias: Record<string, string>
-
-  /**
-   * unplugin-auto-import options
-   * @default 'imports'
-   */
-  type: 'imports' | 'resolvers'
-}
-
-export interface ExpGeneratorOptions extends ExpGeneratorDataOptions {
-  /**
-   * The path to write the generated file. The default value will be automatically resolved by the plugin.
-   *
-   * @example
-   * Values below are possible values by default
-   * './src/imports.ts'
-   * './src/imports.js'
-   * './src/resolvers.ts'
-   * './src/resolvers.js'
-   */
-  writeTo: string
-}
 /**
  * Entry
  */
@@ -81,11 +17,12 @@ export async function expGenerator(path: string, options: Partial<ExpGeneratorOp
   } = await expGeneratorData(path, options)
 
   const {
-    type = 'imports',
+    type,
+    base,
+
     typescript = isTs,
-    base = process.cwd(),
     writeTo = `./src/${type}.${typescript ? 'ts' : 'js'}`,
-  } = options
+  } = resolveOptions(options)
 
   return await fs.writeFile(
     resolve(base, extname(writeTo) ? writeTo : `${writeTo}.${typescript ? 'ts' : 'js'}`),
@@ -93,20 +30,21 @@ export async function expGenerator(path: string, options: Partial<ExpGeneratorOp
   )
 }
 
-export async function expGeneratorData(path: string, options?: Partial<ExpGeneratorDataOptions>) {
+export async function expGeneratorData(path: string, options: Partial<ExpGeneratorDataOptions> = {}) {
   const { raw: pkg, isTs } = await getPkg()
 
   const {
-    base = process.cwd(),
-    pkgName = pkg.name,
-    include = [],
-    exclude = [],
-    rename = 'autoImport',
-    typescript = isTs,
-    exportDefault = true,
+    base,
+    include,
+    exclude,
+    rename,
+    exportDefault,
     alias,
-    type = 'imports',
-  } = options ?? {}
+    type,
+
+    typescript = isTs,
+    pkgName = pkg.name,
+  } = resolveOptions(options)
 
   exclude.push(rename)
 
@@ -132,5 +70,29 @@ ${COMMENT}
       pkg,
       isTs,
     },
+  }
+}
+
+function resolveOptions(options: Partial<ExpGeneratorOptions> = {}) {
+  const {
+    type = 'imports',
+    base = process.cwd(),
+    include = [],
+    exclude = [],
+    rename = 'autoImport',
+    exportDefault = true,
+    alias,
+    ...rest
+  } = options
+
+  return {
+    type,
+    base,
+    include,
+    exclude,
+    rename,
+    exportDefault,
+    alias,
+    ...rest,
   }
 }
