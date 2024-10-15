@@ -56,8 +56,8 @@ export default defineConfig({
 It will generate a file at `./src/imports.js` in default while bundling, you can export it and use it in project like that:
 
 ```ts
-import { defineConfig } from 'vite'
-import Imports from 'my-project/imports' // You need to handle the export files manually when bundling
+import Imports from 'my-project/imports'
+import { defineConfig } from 'vite' // You need to handle the export files manually when bundling
 
 export default defineConfig({
   plugins: [
@@ -81,8 +81,8 @@ ExportCollector({
 Use in project:
 
 ```ts
-import { defineConfig } from 'vite'
 import Resolvers from 'my-project/resolvers'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [

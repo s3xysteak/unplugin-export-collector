@@ -56,8 +56,8 @@ export default defineConfig({
 这会在打包时默认在`./src/imports.js`生成一个文件，你可以将其导出后像这样在项目中使用：
 
 ```ts
-import { defineConfig } from 'vite'
-import Imports from 'my-project/imports' // 你需要自行处理打包时的导出项
+import Imports from 'my-project/imports'
+import { defineConfig } from 'vite' // 你需要自行处理打包时的导出项
 
 export default defineConfig({
   plugins: [
@@ -81,8 +81,8 @@ ExportCollector({
 在项目中使用：
 
 ```ts
-import { defineConfig } from 'vite'
 import Resolvers from 'my-project/resolvers'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [

@@ -1,4 +1,4 @@
-import { URL, fileURLToPath } from 'node:url'
+import { fileURLToPath, URL } from 'node:url'
 import { resolve } from 'pathe'
 import { describe, expect, it } from 'vitest'
 import { findPath } from '../src/core/utils'

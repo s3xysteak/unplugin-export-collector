@@ -1,11 +1,11 @@
-import process from 'node:process'
+import type { ExpGeneratorDataOptions, ExpGeneratorOptions } from './types'
 import { promises as fs } from 'node:fs'
+import process from 'node:process'
+import { COMMENT, importsTemplate, resolversTemplate } from '~shared/template'
 import { extname, resolve } from 'pathe'
+
 import { expCollector } from './parser'
 import { getPkg } from './utils'
-
-import type { ExpGeneratorDataOptions, ExpGeneratorOptions } from './types'
-import { COMMENT, importsTemplate, resolversTemplate } from '~shared/template'
 
 /**
  * Entry

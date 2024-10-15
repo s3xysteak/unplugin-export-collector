@@ -1,5 +1,5 @@
-import process from 'node:process'
 import { existsSync, promises as fs } from 'node:fs'
+import process from 'node:process'
 import { isFunction, isUndefined } from '@s3xysteak/utils'
 import { normalize, resolve } from 'pathe'
 

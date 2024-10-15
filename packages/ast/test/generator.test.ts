@@ -1,8 +1,8 @@
 import { promises as fs } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { describe, expect, it } from 'vitest'
 import { toLF } from '@s3xysteak/utils'
 import { resolve } from 'pathe'
+import { describe, expect, it } from 'vitest'
 import { expGenerator } from '../src/core'
 
 const base = fileURLToPath(new URL('.', import.meta.url))

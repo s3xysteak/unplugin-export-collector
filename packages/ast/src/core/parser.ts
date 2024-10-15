@@ -1,11 +1,11 @@
-import process from 'node:process'
 import { promises as fs } from 'node:fs'
-import { dirname } from 'pathe'
-import { parse as swcParse } from '@swc/core'
+import process from 'node:process'
 import { p } from '@s3xysteak/utils'
+import { parse as swcParse } from '@swc/core'
+import { dirname } from 'pathe'
 
-import { findPath, getPkg } from './utils'
 import { resolveAlias } from './alias'
+import { findPath, getPkg } from './utils'
 
 interface ExpCollectorOptions {
   base?: string
