@@ -8,7 +8,7 @@ const __UnExportList = /** @type {const} */ (["ClassIndex","custom","fRe","func1
  */
 export default function autoImport(map) {
   return {
-    'unplugin-export-collector': __UnExportList.map(v => map && map[v] ? [v, map[v]] : v),
+    '@unplugin-export-collector/monorepo': __UnExportList.map(v => map && map[v] ? [v, map[v]] : v),
   }
 }
 

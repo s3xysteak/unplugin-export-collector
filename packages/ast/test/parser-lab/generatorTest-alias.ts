@@ -7,7 +7,7 @@ const __UnExportList = ["ClassIndex","custom","fRe","func1","func2","func3","fun
  */
 export default function autoImport(map?: Partial<{ [K in typeof __UnExportList[number]]: string }>): Record<string, (string | [string, string])[]> {
   return {
-    'unplugin-export-collector': __UnExportList.map(v => map && map[v] ? [v, map[v]] as [string, string] : v),
+    '@unplugin-export-collector/monorepo': __UnExportList.map(v => map && map[v] ? [v, map[v]] as [string, string] : v),
   }
 }
 

@@ -16,11 +16,11 @@ export default function autoImport(map) {
       ? {
           name,
           as: map[name],
-          from: 'unplugin-export-collector',
+          from: '@unplugin-export-collector/monorepo',
         }
       : {
           name,
-          from: 'unplugin-export-collector',
+          from: '@unplugin-export-collector/monorepo',
         }
   }
   return func

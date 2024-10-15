@@ -14,11 +14,11 @@ export default function autoImport(map?: Partial<{ [K in typeof __UnExportList[n
       ? {
           name,
           as: (map as any)[name],
-          from: 'unplugin-export-collector',
+          from: '@unplugin-export-collector/monorepo',
         }
       : {
           name,
-          from: 'unplugin-export-collector',
+          from: '@unplugin-export-collector/monorepo',
         }
   }
 }
