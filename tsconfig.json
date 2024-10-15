@@ -6,6 +6,10 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
 
+    "paths": {
+      "~shared/*": ["./packages/shared/src/*"]
+    },
+
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "strict": true,

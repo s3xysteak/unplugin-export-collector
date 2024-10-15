@@ -4,8 +4,8 @@ import { extname, resolve } from 'pathe'
 import { expCollector } from './parser'
 import { getPkg } from './utils'
 
-import { COMMENT, importsTemplate, resolversTemplate } from './template'
 import type { ExpGeneratorDataOptions, ExpGeneratorOptions } from './types'
+import { COMMENT, importsTemplate, resolversTemplate } from '~shared/template'
 
 /**
  * Entry

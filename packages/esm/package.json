@@ -1,5 +1,5 @@
 {
-  "name": "@unplugin-export-collector/ast",
+  "name": "unplugin-export-collector",
   "type": "module",
   "version": "0.6.0",
   "private": false,
@@ -92,7 +92,6 @@
   },
   "dependencies": {
     "@s3xysteak/utils": "catalog:",
-    "@swc/core": "^1.7.3",
     "pathe": "catalog:",
     "unplugin": "catalog:"
   }

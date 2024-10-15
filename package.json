@@ -12,11 +12,9 @@
   "scripts": {
     "build": "pnpm -r build",
     "test": "vitest",
-    "test:once": "vitest run",
     "release": "bumpp",
     "publish:ci": "pnpm -r publish --access public --no-git-checks",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@s3xysteak/utils": "^0.7.3",
