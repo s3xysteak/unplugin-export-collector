@@ -3,7 +3,7 @@ export interface ExpGeneratorDataOptions {
    * The base path of the project.
    * @default process.cwd()
    */
-  base: string
+  cwd: string
 
   /**
    * The package name of the project. The default value is the name of the `package.json`.

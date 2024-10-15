@@ -8,20 +8,20 @@ import { resolveAlias } from './alias'
 import { findPath, getPkg } from './utils'
 
 interface ExpCollectorOptions {
-  base?: string
+  cwd?: string
   alias?: Record<string, string>
 }
 
 export async function expCollector(path: string, options?: ExpCollectorOptions): Promise<string[]> {
   const {
-    base,
+    cwd,
     alias = {},
   } = options ?? {}
 
   const result = new Set<string>()
 
-  const recursion = async (path: string, base?: string) => {
-    const filePath = await findPath(path, base)
+  const recursion = async (path: string, cwd?: string) => {
+    const filePath = await findPath(path, cwd)
     const content = await fs.readFile(filePath, 'utf-8')
 
     const { exp, refer } = await parser(content)
@@ -32,7 +32,7 @@ export async function expCollector(path: string, options?: ExpCollectorOptions):
       .forEach(async path => await recursion(resolveAlias(path, alias), dirname(filePath)))
   }
 
-  await recursion(path, base ?? process.cwd())
+  await recursion(path, cwd ?? process.cwd())
 
   return Array.from(result)
 }

@@ -193,7 +193,7 @@ console.log(val)
 const val = await expCollector(
   './index.ts',
   {
-    base: fileURLToPath(new URL('./src/', import.meta.url))
+    cwd: fileURLToPath(new URL('./src/', import.meta.url))
     // alias: { '~': fileURLToPath(new URL('.', import.meta.url)) } // 也支持别名
   }
 )

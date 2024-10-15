@@ -1,15 +1,15 @@
 import { promises as fs } from 'node:fs'
-import { fileURLToPath, URL } from 'node:url'
+import { URL, fileURLToPath } from 'node:url'
 import { resolve } from 'pathe'
 import { describe, expect, it } from 'vitest'
-import { expCollector, parser } from '../src/core'
+import { expCollector, parser } from '../src'
 
-const base = fileURLToPath(new URL('.', import.meta.url))
+const cwd = fileURLToPath(new URL('.', import.meta.url))
 
 describe('parser', () => {
   it('parser', async () => {
     const content = await fs.readFile(
-      resolve(base, './parser-lab/index.ts'),
+      resolve(cwd, './parser-lab/index.ts'),
       'utf-8',
     )
     const res = await parser(content)
@@ -22,7 +22,7 @@ describe('parser', () => {
     const target = ['one', 'two', 'getThree', 'funcIndex', 'ClassIndex', 'func1', 'func2', 'func3', 'fRe'].sort()
 
     const result = await expCollector('./parser-lab', {
-      base,
+      cwd,
     }).then(res => res.sort())
     expect(result).toEqual(target)
   })

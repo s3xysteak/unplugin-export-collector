@@ -1,11 +1,11 @@
-import type { ExpGeneratorDataOptions, ExpGeneratorOptions } from './types'
 import { promises as fs } from 'node:fs'
 import process from 'node:process'
-import { COMMENT, importsTemplate, resolversTemplate } from '~shared/template'
 import { extname, resolve } from 'pathe'
+import type { ExpGeneratorDataOptions, ExpGeneratorOptions } from './types'
 
 import { expCollector } from './parser'
 import { getPkg } from './utils'
+import { COMMENT, importsTemplate, resolversTemplate } from '~shared/template'
 
 /**
  * Entry
@@ -18,14 +18,14 @@ export async function expGenerator(path: string, options: Partial<ExpGeneratorOp
 
   const {
     type,
-    base,
+    cwd,
 
     typescript = isTs,
     writeTo = `./src/${type}.${typescript ? 'ts' : 'js'}`,
   } = resolveOptions(options)
 
   return await fs.writeFile(
-    resolve(base, extname(writeTo) ? writeTo : `${writeTo}.${typescript ? 'ts' : 'js'}`),
+    resolve(cwd, extname(writeTo) ? writeTo : `${writeTo}.${typescript ? 'ts' : 'js'}`),
     data,
   )
 }
@@ -34,7 +34,7 @@ export async function expGeneratorData(path: string, options: Partial<ExpGenerat
   const { raw: pkg, isTs } = await getPkg()
 
   const {
-    base,
+    cwd,
     include,
     exclude,
     rename,
@@ -48,7 +48,7 @@ export async function expGeneratorData(path: string, options: Partial<ExpGenerat
 
   exclude.push(rename)
 
-  const expList = await expCollector(path, { base, alias })
+  const expList = await expCollector(path, { cwd, alias })
 
   const exportList = [...expList, ...include].filter(i => !exclude.includes(i)).sort()
 
@@ -76,7 +76,7 @@ ${COMMENT}
 function resolveOptions(options: Partial<ExpGeneratorOptions> = {}) {
   const {
     type = 'imports',
-    base = process.cwd(),
+    cwd = process.cwd(),
     include = [],
     exclude = [],
     rename = 'autoImport',
@@ -87,7 +87,7 @@ function resolveOptions(options: Partial<ExpGeneratorOptions> = {}) {
 
   return {
     type,
-    base,
+    cwd,
     include,
     exclude,
     rename,

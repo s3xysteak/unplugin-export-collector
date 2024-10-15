@@ -8,15 +8,15 @@ export async function isDirectory(path: string) {
   return stat.isDirectory()
 }
 
-export async function findPath(rawPath: string, base?: string) {
-  const _p = resolve(base ?? process.cwd(), rawPath)
+export async function findPath(rawPath: string, cwd?: string) {
+  const _p = resolve(cwd ?? process.cwd(), rawPath)
   const p = !existsSync(_p)
     ? _p
     : await isDirectory(_p)
       ? resolve(_p, 'index')
       : _p
 
-  const ext = findExtension(p, base)
+  const ext = findExtension(p, cwd)
   if (isUndefined(ext))
     throw new Error(`File not found: ${p}`)
 
@@ -36,16 +36,16 @@ export async function getPkg(path?: string) {
 }
 
 /** return extension with `.` */
-export function findExtension(path: string, base: string = process.cwd()) {
-  const p = resolve(base, path)
+export function findExtension(path: string, cwd: string = process.cwd()) {
+  const p = resolve(cwd, path)
   const extensionList = ['', '.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']
 
   const ext = extensionList.find(ext => existsSync(p + ext))
   return ext
 }
 
-export function addExtension(path: string, base: string = process.cwd()) {
-  return path + findExtension(path, base)
+export function addExtension(path: string, cwd: string = process.cwd()) {
+  return path + findExtension(path, cwd)
 }
 
 export function toValue<T>(val: T | ((...args: any) => T)) {

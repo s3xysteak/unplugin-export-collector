@@ -1,10 +1,10 @@
-import type { Awaitable, Callable } from '@s3xysteak/utils'
-import type { UnpluginFactoryOptions } from './types'
 import process from 'node:process'
+import type { Awaitable, Callable } from '@s3xysteak/utils'
 import { resolve } from 'pathe'
 import { createUnplugin } from 'unplugin'
-import { expGenerator } from '.'
+import type { UnpluginFactoryOptions } from './types'
 import { addExtension, toValue } from './utils'
+import { expGenerator } from '.'
 
 export default createUnplugin<Callable<Awaitable<Partial<UnpluginFactoryOptions>>> | undefined>((options = {}) => {
   return {
@@ -14,12 +14,12 @@ export default createUnplugin<Callable<Awaitable<Partial<UnpluginFactoryOptions>
 
       const {
         entries = ['./src/index'],
-        base = process.cwd(),
+        cwd = process.cwd(),
       } = options
 
       const _entries = entries
-        .map(path => addExtension(path, base))
-        .map(entry => resolve(base, entry))
+        .map(path => addExtension(path, cwd))
+        .map(entry => resolve(cwd, entry))
 
       for (const entry of _entries)
         await expGenerator(entry, options)

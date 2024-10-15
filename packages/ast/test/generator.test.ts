@@ -5,7 +5,7 @@ import { resolve } from 'pathe'
 import { describe, expect, it } from 'vitest'
 import { expGenerator } from '../src/core'
 
-const base = fileURLToPath(new URL('.', import.meta.url))
+const cwd = fileURLToPath(new URL('.', import.meta.url))
 
 describe.concurrent('generate', () => {
   /** TS */
@@ -30,12 +30,12 @@ export default function autoImport(map?: Partial<{ [K in typeof __UnExportList[n
 `
 
     await expGenerator('./parser-lab/index.ts', {
-      base,
+      cwd,
       include: ['custom'],
       exclude: ['one'],
       writeTo: './parser-lab/generatorTest.ts',
     })
-    const result = await fs.readFile(resolve(base, './parser-lab/generatorTest.ts'), 'utf-8')
+    const result = await fs.readFile(resolve(cwd, './parser-lab/generatorTest.ts'), 'utf-8')
     expect(toLF(result)).toBe(`${target.trim()}\n`)
   })
 
@@ -62,13 +62,13 @@ export default function autoImport(map) {
 `
 
     await expGenerator('./parser-lab/index.js', {
-      base,
+      cwd,
       include: ['custom'],
       exclude: ['one'],
       typescript: false,
       writeTo: './parser-lab/generatorTest.js',
     })
-    const result = await fs.readFile(resolve(base, './parser-lab/generatorTest.js'), 'utf-8')
+    const result = await fs.readFile(resolve(cwd, './parser-lab/generatorTest.js'), 'utf-8')
     expect(toLF(result)).toBe(`${target.trim()}\n`)
   })
 
@@ -106,14 +106,14 @@ export default function autoImport(map?: Partial<{ [K in typeof __UnExportList[n
 `
 
     await expGenerator('./parser-lab/index.ts', {
-      base,
+      cwd,
       include: ['custom'],
       exclude: ['one'],
       type: 'resolvers',
       writeTo: './parser-lab/generatorTest-resolvers.ts',
     })
 
-    const result = await fs.readFile(resolve(base, './parser-lab/generatorTest-resolvers.ts'), 'utf-8')
+    const result = await fs.readFile(resolve(cwd, './parser-lab/generatorTest-resolvers.ts'), 'utf-8')
 
     expect(toLF(result)).toBe(`${target.trim()}\n`)
   })
@@ -154,7 +154,7 @@ export default function autoImport(map) {
 `
 
     await expGenerator('./parser-lab/index.js', {
-      base,
+      cwd,
       include: ['custom'],
       exclude: ['one'],
       typescript: false,
@@ -162,7 +162,7 @@ export default function autoImport(map) {
       writeTo: './parser-lab/generatorTest-resolvers.js',
     })
 
-    const result = await fs.readFile(resolve(base, './parser-lab/generatorTest-resolvers.js'), 'utf-8')
+    const result = await fs.readFile(resolve(cwd, './parser-lab/generatorTest-resolvers.js'), 'utf-8')
 
     expect(toLF(result)).toBe(`${target.trim()}\n`)
   })
@@ -189,7 +189,7 @@ export default function autoImport(map?: Partial<{ [K in typeof __UnExportList[n
 `
 
     await expGenerator('./parser-lab/index-alias.ts', {
-      base,
+      cwd,
       include: ['custom'],
       exclude: ['one'],
       alias: {
@@ -198,7 +198,7 @@ export default function autoImport(map?: Partial<{ [K in typeof __UnExportList[n
       writeTo: './parser-lab/generatorTest-alias.ts',
     })
 
-    const result = await fs.readFile(resolve(base, './parser-lab/generatorTest-alias.ts'), 'utf-8')
+    const result = await fs.readFile(resolve(cwd, './parser-lab/generatorTest-alias.ts'), 'utf-8')
 
     expect(toLF(result)).toBe(`${target.trim()}\n`)
   })
